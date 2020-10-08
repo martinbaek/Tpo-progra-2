@@ -58,7 +58,7 @@ public class DiccionarioSimpleDinamico implements DiccionarioSimpleTDA {
 	@Override
 	public ConjuntoTDA claves() {
 		// TODO Auto-generated method stub
-		ConjuntoTDA resultado = new Conjunto();
+		ConjuntoTDA resultado = new ConjuntoDinamico();
 		resultado.inicializarConjunto();
 		Nodo actual = inicio;
 		while(actual != null) {

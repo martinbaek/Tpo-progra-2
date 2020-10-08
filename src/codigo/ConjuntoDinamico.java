@@ -1,62 +1,63 @@
 package codigo;
 
-import java.util.Random;
-
 import Interfaces.ConjuntoTDA;
 
-public class Conjunto implements ConjuntoTDA {
-	private int[] v;
-	private int cant;
-	private final int posINF = 0;
-	private Random posAzar;
+public class ConjuntoDinamico implements ConjuntoTDA {
+	class Nodo{
+		int x;
+		Nodo sig;
+	}
+	private Nodo prim;
 	@Override
 	public void inicializarConjunto() {
 		// TODO Auto-generated method stub
-		v=new int[1101];
-		cant = 0;
-		posAzar = new Random(System.currentTimeMillis());
+		prim = null;
 	}
 
 	@Override
 	public void agregar(int x) {
 		// TODO Auto-generated method stub
-		v[cant] = x;
-		cant++;
+		Nodo n = new Nodo();
+		n.x = x;
+		n.sig = prim;
+		prim = n;
 	}
 
 	@Override
 	public void sacar(int x) {
 		// TODO Auto-generated method stub
-		int i = cant-1;
-		while(v[i] != x) {
-			i--;
+		if(prim.x == x) {
+			prim = prim.sig;
+			return;
 		}
-		v[i] = v[cant - 1];
-		cant--;
+		Nodo ant = null, act = prim;
+		while(act.x != x) {
+			ant = act;
+			act = act.sig;
+		}
+		ant.sig = act.sig;
 	}
 
 	@Override
 	public int elegir() {
 		// TODO Auto-generated method stub
-		int i = posAzar.nextInt(cant - 1 - posINF + 1) + posINF;
-		return v[i];
+		return prim.x;
 	}
 
 	@Override
 	public boolean conjuntoVacio() {
 		// TODO Auto-generated method stub
-		return cant ==0;
+		return prim == null;
 	}
 
 	@Override
 	public boolean pertenece(int x) {
 		// TODO Auto-generated method stub
-		if(cant !=0) {
-			int i = 0;
-			while(v[i] != x && i!=cant)
-				i++;
-		if(i<cant)
-			return true;
+		Nodo aux = prim;
+		while(aux != null) {
+			if(x == aux.x)
+				return true;
+			aux = aux.sig;
 		}
 		return false;
 	}

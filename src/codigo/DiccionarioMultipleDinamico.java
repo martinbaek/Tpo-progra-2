@@ -76,7 +76,7 @@ public class DiccionarioMultipleDinamico implements DiccionarioMultipleTDA {
 	@Override
 	public ConjuntoTDA obtener(int c) {
 		// TODO Auto-generated method stub
-		ConjuntoTDA resultado = new Conjunto();
+		ConjuntoTDA resultado = new ConjuntoDinamico();
 		resultado.inicializarConjunto();
 		Nodo actualClave = inicio;
 		while(actualClave != null && actualClave.clave != c)
@@ -92,7 +92,7 @@ public class DiccionarioMultipleDinamico implements DiccionarioMultipleTDA {
 	@Override
 	public ConjuntoTDA claves() {
 		// TODO Auto-generated method stub
-		ConjuntoTDA resultado = new Conjunto();
+		ConjuntoTDA resultado = new ConjuntoDinamico();
 		resultado.inicializarConjunto();
 		Nodo actual = inicio;
 		while(actual != null) {
