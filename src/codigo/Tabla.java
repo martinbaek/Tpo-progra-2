@@ -16,19 +16,21 @@ public class Tabla implements TablaTDA {
 	@Override
 	public void inicializarTabla() {
 		// TODO Auto-generated method stub
-		tablita = new linea[1100];
+		tablita = new linea[100];
 		cant = 0;
 	}
 
 	@Override
 	public void agregar(String l) {
 		// TODO Auto-generated method stub
-		linea aux = new linea();
+		//linea aux = new linea();
 		if(cant == 0 || !pertenece(l)) {
-			tablita[cant] = aux;
+			linea aux = new linea();
+			//tablita[cant] = aux;
 			cant ++;
 			aux.codigo = cant;
 			aux.nombre = l;
+			tablita[cant] = aux;
 		}
 	}
 
@@ -37,7 +39,7 @@ public class Tabla implements TablaTDA {
 		// TODO Auto-generated method stub
 		linea[] provi = tablita;
 		int nprovi = cant;
-		nprovi--;
+		//nprovi--;
 		while(nprovi != 0) {
 			if(!provi[nprovi].nombre.equals(nombre)) {
 				nprovi--;
@@ -52,14 +54,14 @@ public class Tabla implements TablaTDA {
 	public int codigo(String nombre) {
 		// TODO Auto-generated method stub
 		int aux = cant;
-		aux--;
+		//aux--;
 		while(aux!=0) {
 			if(nombre.compareTo(tablita[aux].nombre) == 0)
 				return tablita[aux].codigo;
 			aux--;
 		}
 		
-		return aux+1;
+		return 0;
 	}
 
 	@Override
@@ -68,9 +70,9 @@ public class Tabla implements TablaTDA {
 		if(cant!=0) {
 			ColaTDA codificado = new Cola();
 			codificado.inicializarCola();
-			int aux = 0;
-			while(aux != cant) {
-				String provi = (aux+1)+" ; "+tablita[aux].nombre;
+			int aux = 1;
+			while(aux <= cant) {
+				String provi = (tablita[aux].codigo)+" ; "+tablita[aux].nombre;
 				codificado.acolar(provi);
 				aux++;
 			}
@@ -83,10 +85,10 @@ public class Tabla implements TablaTDA {
 	public void ordenarNombres() {
 		// TODO Auto-generated method stub
 		if(cant!=0) {
-			int aux =cant;
-			aux--;
+			int aux =cant-1;
+			//aux--;
 			while(aux != 0) {
-				int p =0;
+				int p =1;
 				while(p != aux) {
 					if(((tablita[p].nombre).compareTo(tablita[p+1].nombre))>0){
 						String instancia = tablita[p].nombre;
@@ -107,10 +109,10 @@ public class Tabla implements TablaTDA {
 	public void ordenarCodigos() {
 		// TODO Auto-generated method stub
 		if(cant!=0) {
-			int aux =cant;
-			aux--;
+			int aux =cant-1;
+			//aux--;
 			while(aux != 0) {
-				int p =0;
+				int p =1;
 				while(p != aux) {
 					if((tablita[p].codigo)>(tablita[p+1].codigo)){
 						String instancia = tablita[p].nombre;
