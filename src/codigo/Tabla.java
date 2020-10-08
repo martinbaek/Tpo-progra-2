@@ -16,7 +16,7 @@ public class Tabla implements TablaTDA {
 	@Override
 	public void inicializarTabla() {
 		// TODO Auto-generated method stub
-		tablita = new linea[100];
+		tablita = new linea[101];
 		cant = 0;
 	}
 

@@ -62,7 +62,7 @@ public class TablaDinamica implements TablaTDA {
 	public ColaTDA tabla() {
 		// TODO Auto-generated method stub.
 		Nodo aux = inicio;
-		ColaTDA codificado = new Cola();
+		ColaTDA codificado = new ColaDinamica();
 		codificado.inicializarCola();
 		while(aux != null) {
 			//System.out.println(inicio.codigo +" ; " +inicio.nombre+"");

@@ -1,44 +1,52 @@
 package codigo;
 
 import Interfaces.ColaNTDA;
-
-public class ColaN implements ColaNTDA {
-	int[] vector;
-	int poner, sacar;
+public class ColaNDinamica implements ColaNTDA {
+	class Nodo{
+		int d;
+		Nodo sig;
+	}
+	private Nodo inicio, fin;
+	
 	@Override
 	public void acolar(int c) {
 		// TODO Auto-generated method stub
-		vector[poner] = c;
-		poner += 1;
-		if(poner == 101)
-			poner =0;
+		Nodo n = new Nodo();
+		n.d = c;
+		n.sig = null;
+		if(inicio == null)
+			inicio = fin = n;
+		else {
+			fin.sig = n;
+			fin = n;
+		}
+		
 	}
 
 	@Override
 	public int primero() {
 		// TODO Auto-generated method stub
-		return vector[sacar];
+		return inicio.d;
 	}
 
 	@Override
 	public void desacolar() {
 		// TODO Auto-generated method stub
-		sacar+=1;
-		if(sacar == 101)
-			sacar =0;
+		inicio = inicio.sig;
+		if(inicio == null)
+			fin = null;
 	}
 
 	@Override
 	public void inicializarCola() {
 		// TODO Auto-generated method stub
-		vector = new int[101];
-		poner = sacar = 0;
+		inicio = fin = null;
 	}
 
 	@Override
 	public boolean colaVacia() {
 		// TODO Auto-generated method stub
-		return sacar==poner;
+		return inicio == null;
 	}
 
 }

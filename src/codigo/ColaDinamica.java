@@ -1,15 +1,15 @@
 package codigo;
 
-import Interfaces.ColaNTDA;
-public class ColaDinamica implements ColaNTDA {
+import Interfaces.ColaTDA;
+
+public class ColaDinamica implements ColaTDA {
 	class Nodo{
-		int d;
+		String d;
 		Nodo sig;
 	}
 	private Nodo inicio, fin;
-	
 	@Override
-	public void acolar(int c) {
+	public void acolar(String c) {
 		// TODO Auto-generated method stub
 		Nodo n = new Nodo();
 		n.d = c;
@@ -20,11 +20,10 @@ public class ColaDinamica implements ColaNTDA {
 			fin.sig = n;
 			fin = n;
 		}
-		
 	}
 
 	@Override
-	public int primero() {
+	public String primero() {
 		// TODO Auto-generated method stub
 		return inicio.d;
 	}

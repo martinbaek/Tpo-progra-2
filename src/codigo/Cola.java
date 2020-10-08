@@ -10,7 +10,7 @@ public class Cola implements ColaTDA {
 		// TODO Auto-generated method stub
 		vector[poner] = c;
 		poner += 1;
-		if(poner == 1101)
+		if(poner == 101)
 			poner =0;
 	}
 
@@ -24,14 +24,14 @@ public class Cola implements ColaTDA {
 	public void desacolar() {
 		// TODO Auto-generated method stub
 		sacar+=1;
-		if(sacar == 1101)
+		if(sacar == 101)
 			sacar =0;
 	}
 
 	@Override
 	public void inicializarCola() {
 		// TODO Auto-generated method stub
-		vector = new String[1101];
+		vector = new String[101];
 		poner = sacar = 0;
 	}
 

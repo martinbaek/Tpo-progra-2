@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 import Interfaces.ColaNTDA;
+import Interfaces.ColaPrioridadTDA;
 import Interfaces.ColaTDA;
+import Interfaces.DiccionarioSimpleTDA;
 import Interfaces.TablaTDA;
 
 
@@ -24,28 +26,33 @@ public class Tester {
 		// TODO Auto-generated method stub
 		peliculas = new TablaDinamica();
 		proveedores = new Tabla();
-		movimientos = new ColaDinamica();
+		movimientos = new ColaNDinamica();
 		movimientos.inicializarCola();
 		proveedores.inicializarTabla();
 		peliculas.inicializarTabla();
 		cargarPeliculas("LISTADO DE PELICULAS.txt",peliculas);
 		cargarProveedores("StreamCia.txt",proveedores);
 		cargarMovimientos("Movimientos.txt", movimientos, proveedores, peliculas);
-		peliculas.ordenarCodigos();
 		/**
+		peliculas.ordenarCodigos();
+		
 		*peliculas.ordenarNombres();
 		*
-		*ColaTDA mostrar = peliculas.tabla();
-		*while(!mostrar.colaVacia()) {
-		*	System.out.println(mostrar.primero());
-		*	mostrar.desacolar();
-		*}
-		*while(!movimientos.colaVacia()) {
-		*	System.out.println(movimientos.primero());
-		*	movimientos.desacolar();
-		*	}
-		**/
-		mostrarUltimosDiez(movimientos);
+		ColaTDA mostrar = peliculas.tabla();
+		while(!mostrar.colaVacia()) {
+			System.out.println(mostrar.primero());
+			mostrar.desacolar();
+		}
+		*/
+		while(!movimientos.colaVacia()) {
+			System.out.println(movimientos.primero());
+			movimientos.desacolar();
+			}
+		
+		//mostrarUltimosDiez(movimientos);
+		//principalesClientes(movimientos);
+
+
 	}
 	
 	public static void cargarMovimientos(String archivo, ColaNTDA movimientos, TablaTDA proveedores, TablaTDA peliculas) {
@@ -113,8 +120,8 @@ public class Tester {
 	public static ColaNTDA invertirCola(ColaNTDA dada) {
 		ColaNTDA invertido;
 		ColaNTDA resto;
-		invertido = new ColaDinamica();
-		resto  = new ColaDinamica();
+		invertido = new ColaNDinamica();
+		resto  = new ColaNDinamica();
 		invertido.inicializarCola();
 		resto.inicializarCola();
 		int aux =0;
@@ -164,7 +171,7 @@ public class Tester {
 	}
 	
 	public static ColaNTDA Primeros10(ColaNTDA dada) {
-		ColaNTDA primeros = new ColaDinamica();
+		ColaNTDA primeros = new ColaNDinamica();
 		primeros.inicializarCola();
 		for(int i =0; i<10;i++) {
 			primeros.acolar(dada.primero());
@@ -173,8 +180,8 @@ public class Tester {
 		return primeros;	
 	}
 	
-	public static void mostrarUltimosDiez(ColaNTDA movimientos) {
-		ColaNTDA invertido = invertirCola(movimientos);
+	public static void mostrarUltimosDiez(ColaNTDA movi) {
+		ColaNTDA invertido = invertirCola(movi);
 		ColaNTDA primerosDiez = Primeros10(invertido);
 		primerosDiez = invertirCola(primerosDiez);
 		System.out.println("Los ultimos 10 movimientos ordenados de los mas recientes a los menos recientes:");
@@ -185,11 +192,51 @@ public class Tester {
 		}*/
 	}
 	
+	public static DiccionarioSimpleTDA diccionarioClientes(ColaNTDA movi) {
+		DiccionarioSimpleTDA dic = new DiccionarioSimpleDinamico();
+		dic.inicializarDiccionarioSimple();
+		while(!movi.colaVacia()) {
+			int cliente = movi.primero()/1000000;
+			if(dic.claves().pertenece(cliente)){
+				int cantPelis = dic.obtener(cliente);
+				cantPelis++;
+				dic.eliminar(cliente);
+				dic.agregar(cliente, cantPelis);
+			}else {
+				dic.agregar(cliente, 1);
+			}
+			movi.desacolar();
+		}
+		return dic;
+	}
 	
+	public static ColaPrioridadTDA colaClientes(DiccionarioSimpleTDA dic) {
+		ColaPrioridadTDA clientes = new ColaPrioridadDinamica();
+		clientes.inicializarCola();
+		while(!dic.claves().conjuntoVacio()) {
+			int cliente = dic.claves().elegir();
+			int cant = dic.obtener(cliente);
+			clientes.acolarPrioridad(cliente, cant);
+			dic.eliminar(cliente);
+		}
+	return clientes;
+	}
 	
-	
-	
-	
+	public static void principalesClientes(ColaNTDA movim) {
+		ColaPrioridadTDA clientes = colaClientes(diccionarioClientes(movim));
+		ColaPrioridadTDA clientesMasVistos = new ColaPrioridadDinamica();
+		int prior = clientes.prioridad();
+		while(clientes.prioridad() == prior){
+			int cliente = clientes.primero();
+			clientesMasVistos.acolarPrioridad(prior, cliente);
+			clientes.desacolar();
+		}
+		System.out.println("Los clientes que solicitaron la mayor cantidad de peliculas:");
+		while(!clientesMasVistos.colaVacia()) {
+			System.out.println(clientesMasVistos.prioridad());
+			clientesMasVistos.desacolar();
+		}
+	}
 	
 	
 }

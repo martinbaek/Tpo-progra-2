@@ -5,14 +5,14 @@ import java.util.Random;
 import Interfaces.ConjuntoTDA;
 
 public class Conjunto implements ConjuntoTDA {
-	int[] v;
-	int cant;
-	final int posINF =0;
-	Random posAzar;
+	private int[] v;
+	private int cant;
+	private final int posINF = 0;
+	private Random posAzar;
 	@Override
 	public void inicializarConjunto() {
 		// TODO Auto-generated method stub
-		v=new int[100];
+		v=new int[1100];
 		cant = 0;
 		posAzar = new Random(System.currentTimeMillis());
 	}
@@ -38,9 +38,6 @@ public class Conjunto implements ConjuntoTDA {
 	@Override
 	public int elegir() {
 		// TODO Auto-generated method stub
-		if(cant==0) { //para saber cuando esta vacia
-			return -1;
-		}
 		int i = posAzar.nextInt(cant - 1 - posINF + 1) + posINF;
 		return v[i];
 	}
@@ -54,13 +51,14 @@ public class Conjunto implements ConjuntoTDA {
 	@Override
 	public boolean pertenece(int x) {
 		// TODO Auto-generated method stub
-		int i = cant-1;
-		while(v[i] != x && i >= 0) {
-			i--;
+		if(cant !=0) {
+			int i = 0;
+			while(v[i] != x && i!=cant)
+				i++;
+		if(i<cant)
+			return true;
 		}
-		if(i<0)
-			return false;
-		return true;
+		return false;
 	}
 
 }
